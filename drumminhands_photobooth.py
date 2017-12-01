@@ -268,10 +268,10 @@ def start_photobooth():
 	
 	print "Creating an animated gif" 
 	
-	if config.post_online:
-		show_image(real_path + "/uploading.png")
-	else:
-		show_image(real_path + "/processing.png")
+	#if config.post_online:
+	#	show_image(real_path + "/uploading.png")
+	#else:
+	show_image(real_path + "/processing.png")
 	
 	if config.make_gifs: # make the gifs
 		if config.hi_res_pics:
@@ -287,42 +287,42 @@ def start_photobooth():
 			graphicsmagick = "gm convert -delay " + str(gif_delay) + " " + config.file_path + now + "*.jpg " + config.file_path + now + ".gif" 
 			os.system(graphicsmagick) #make the .gif
 
-	if config.post_online: # turn off posting pics online in config.py
-		connected = is_connected() #check to see if you have an internet connection
+	#if config.post_online: # turn off posting pics online in config.py
+	#	connected = is_connected() #check to see if you have an internet connection
 
-		if (connected==False):
-			print "bad internet connection"
+	#	if (connected==False):
+	#		print "bad internet connection"
                     
-		while connected:
-			if config.make_gifs: 
-				try:
-					file_to_upload = config.file_path + now + ".gif"
-					client.create_photo(config.tumblr_blog, state="published", tags=[config.tagsForTumblr], data=file_to_upload)
-					break
-				except ValueError:
-					print "Oops. No internect connection. Upload later."
-					try: #make a text file as a note to upload the .gif later
-						file = open(config.file_path + now + "-FILENOTUPLOADED.txt",'w')   # Trying to create a new file or open one
-						file.close()
-					except:
-						print('Something went wrong. Could not write file.')
-						sys.exit(0) # quit Python
-			else: # upload jpgs instead
-				try:
-					# create an array and populate with file paths to our jpgs
-					myJpgs=[0 for i in range(4)]
-					for i in range(4):
-						myJpgs[i]=config.file_path + now + "-0" + str(i+1) + ".jpg"
-					client.create_photo(config.tumblr_blog, state="published", tags=[config.tagsForTumblr], format="markdown", data=myJpgs)
-					break
-				except ValueError:
-					print "Oops. No internect connection. Upload later."
-					try: #make a text file as a note to upload the .gif later
-						file = open(config.file_path + now + "-FILENOTUPLOADED.txt",'w')   # Trying to create a new file or open one
-						file.close()
-					except:
-						print('Something went wrong. Could not write file.')
-						sys.exit(0) # quit Python				
+	#	while connected:
+	#		if config.make_gifs: 
+	#			try:
+	#				file_to_upload = config.file_path + now + ".gif"
+	#				client.create_photo(config.tumblr_blog, state="published", tags=[config.tagsForTumblr], data=file_to_upload)
+	#				break
+	#			except ValueError:
+	#				print "Oops. No internect connection. Upload later."
+	#				try: #make a text file as a note to upload the .gif later
+	#					file = open(config.file_path + now + "-FILENOTUPLOADED.txt",'w')   # Trying to create a new file or open one
+	#					file.close()
+	#				except:
+	#					print('Something went wrong. Could not write file.')
+	#					sys.exit(0) # quit Python
+	#		else: # upload jpgs instead
+	#			try:
+	#				# create an array and populate with file paths to our jpgs
+	#				myJpgs=[0 for i in range(4)]
+	#				for i in range(4):
+	#					myJpgs[i]=config.file_path + now + "-0" + str(i+1) + ".jpg"
+	#				client.create_photo(config.tumblr_blog, state="published", tags=[config.tagsForTumblr], format="markdown", data=myJpgs)
+	#				break
+	#			except ValueError:
+	#				print "Oops. No internect connection. Upload later."
+	#				try: #make a text file as a note to upload the .gif later
+	#					file = open(config.file_path + now + "-FILENOTUPLOADED.txt",'w')   # Trying to create a new file or open one
+	#					file.close()
+	#				except:
+	#					print('Something went wrong. Could not write file.')
+	#					sys.exit(0) # quit Python				
 	
 	########################### Begin Step 4 #################################
 	
