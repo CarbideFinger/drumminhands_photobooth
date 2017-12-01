@@ -231,12 +231,14 @@ def start_photobooth():
 			for i in range(1,total_pics+1):
 				camera.hflip = True # preview a mirror image
 				camera.start_preview(resolution=(config.monitor_w, config.monitor_h)) # start preview at low res but the right ratio
+				GPIO.output(12,True)
 				time.sleep(2) #warm up camera
 				GPIO.output(led_pin,True) #turn on the LED
 				filename = config.file_path + now + '-0' + str(i) + '.jpg'
 				camera.hflip = False # flip back when taking photo
 				camera.capture(filename)
 				print(filename)
+				GPIO.output(12,False)
 				GPIO.output(led_pin,False) #turn off the LED
 				camera.stop_preview()
 				show_image(real_path + "/pose" + str(i) + ".png")
